@@ -1,0 +1,23 @@
+#writecenter
+#Writes a given string in the center of a given row
+#either in Bold, Normal or reverse video.
+#check whether called properly
+if [ $# -ne 3 ]
+then 
+	echo improper arguments
+	exit
+fi
+#position cursor
+str=$1
+row=$2
+attr=$3
+length=`echo $str |wc -c`
+col=`expr \( 80 - $length \) / 2`
+tput cup $row $col
+#display string in Bold, Normal or Reverse video
+case $attr in 
+	[bB]) echo -ne "\033[1m$str" ;;
+	[nN]) echo -ne  "$str" ;;
+	[rR]) echo -ne "\033[7m$str" ;;
+esac
+echo -ne "\033[0m"
